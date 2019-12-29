@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%=articles && articles[0] && articles[0].course%> </title>
+    <style>
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        pre { background-color: gainsboro;}
+        .comment_auther {font-weight: bold;}
+    </style>
+</head>
+<body>
+    <div id="toc" class="_3O_7qs2p_0 _2q1SuvsS_0">
+    <hr>
+        <%for(let i=0;i<articles.length;i++) {%>
+            <%const article = articles[i]%>
+            <a href="#<%=article._id%>"><%=article.articleTitle%></a><br>
+        <%}%>
+    </div>
+    <hr>
+    <%for(let i=0;i<articles.length;i++){%>
+        <%const article = articles[i]%>
+        <div id="<%=article._id%>" class="_50pDbNcP_0">
+
+            <h2 class="vJXgmLTi_0 _2QmGFWqF_0">
+                <%= article.articleTitle %>
+            </h2>
+            <div class="_2LbT9q3y_0 _2QmGFWqF_0"><span><%= article.articleCtime %></span> <span><%= article.authorName %></span>
+            </div>
+            <div class="_3IatBmhv_0">
+                <div class="_29HP61GA_0">
+                    <%- article.articleContent %>
+                </div>
+            </div>
+            <div>
+            <%if (i>0) {%>
+                <a style="margin-right: 10px;" href="#<%= articles[i-1]._id %>"><%= articles[i-1].articleTitle %></a>
+            <%}%>
+            <a style="margin-right: 10px;" href="#toc">回到目录</a>
+            <%if (i<articles.length-1) {%>
+                <a style="margin-right: 10px;" href="#<%= articles[i+1]._id %>"><%= articles[i+1].articleTitle %></a>
+            <%}%>
+            </div>
+            <br>
+            <hr>
+            <% if (article.comments){ %>
+                <h3>精选留言: <%- article.commentsTotal %> 条留言</h3>
+                <ul>
+                    <%for(let i=0;i<article.comments.length;i++){%>
+                        <li>
+                            <span class="comment_auther"><%- article.comments[i].user_name %></span>: 
+                            <br>
+                            <span class="comment"><%- article.comments[i].comment_content %></span>
+                            <br>
+                            <br>
+                            <% if(article.comments[i].replies) { %>
+                                <% for(let j=0;j<article.comments[i].replies.length;j++){ %>
+                                    <span class="comment_auther"><%- article.comments[i].replies[j].user_name %>:</span>
+                                    <br>
+                                    <span class="comment"><%- article.comments[i].replies[j].content %></span>
+                                <%}%>
+                            <% } %>
+                        </li>
+                        <hr>
+                    <%}%>
+                </ul>
+            <%}%>
+        </div>
+        <div>
+        <%if (i>0) {%>
+            <a style="margin-right: 10px;" href="#<%= articles[i-1]._id %>"><%= articles[i-1].articleTitle %></a>
+        <%}%>
+        <a style="margin-right: 10px;" href="#toc">回到目录</a>
+        <%if (i<articles.length-1) {%>
+            <a style="margin-right: 10px;" href="#<%= articles[i+1]._id %>"><%= articles[i+1].articleTitle %></a>
+        <%}%>
+        </div>
+    <%}%>
+</body>
+</html>
