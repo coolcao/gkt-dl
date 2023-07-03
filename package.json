@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "2mongo": "node index.js",
+    "pdf": "node ebook/pdf.js",
+    "html": "node ebook/html.js"
   },
   "author": "coolcao",
   "license": "ISC",
