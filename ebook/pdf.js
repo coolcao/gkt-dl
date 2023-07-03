@@ -2,8 +2,10 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
 const ejs = require('ejs');
+const dayjs = require('dayjs');
+
 const config = require('../config')
-const article = require('../article')
+const article = require('../article');
 
 // 每篇文章一个pdf
 let articleTemplate = fs.readFileSync(path.resolve(__dirname, '../template/article.ejs'), 'utf8');
@@ -19,6 +21,10 @@ const generatePDF = async () => {
 
         for (let i=0;i<articles.length;i++) {
             const a = articles[i];
+            
+            // 格式化时间
+            a.articleCtime = dayjs(a.articleCtime * 1000).format('YYYY-MM-DD HH:mm:ss');
+            
             const html = ejs.render(articleTemplate, a);
             page = await browser.newPage();
             await page.setContent(html)
